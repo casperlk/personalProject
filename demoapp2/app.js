@@ -16,15 +16,6 @@ var squareRouter = require('./routes/square');
 
 var app = express();
 
-router.get('/square', function(req, res, next){
-  res.render('square',{x:0,square:0});
-})
-
-router.post('/square', function(req, res, next){
-  const x = parseInt(req.bodt.x);
-  const square = x*x;
-  res.render('square',{x:0,square:0});
-})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

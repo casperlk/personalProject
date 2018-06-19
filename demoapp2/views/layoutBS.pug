@@ -10,24 +10,12 @@ html(lang="en")
   body
 
   <nav class="nav nav-pills flex-column flex-sm-row">
-    <a class="flex-sm-fill text-sm-center nav-link active" href="/leaderboard">Leaderboard</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="/leaderboard">Leaderboard</a>
     <a class="flex-sm-fill text-sm-center nav-link" href="/play">Play</a>
     <a class="flex-sm-fill text-sm-center nav-link" href="/settings">Settings</a>
   </nav>
 
-    .nav
-        li.nav-item
-          a.btn.btn-outline-primary.btn(href="/leaderboard" role="button") Leaderboard
-        li.nav-item
-          a.btn.btn-outline-primary.btn(href="/play" role="button") Play
-        li.nav-item
-          a.btn.btn-outline-primary.btn(href="/settings" role="button") Settings
-    .comtainer
-      .row
-        .white.col-sm-8
-          a.btn.btn-outline-primary.btn(href="/leaderboard" role="button") Leaderboard
-          .white.col-sm-6
-            a.btn.btn-outline-primary.btn(href="/play" role="button") Play
+
 
     block content
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
