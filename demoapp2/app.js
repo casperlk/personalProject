@@ -1,8 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const
+ createError = require('http-errors');
+ express = require('express');
+ path = require('path');
+ cookieParser = require('cookie-parser');
+ logger = require('morgan');
+ accountsController = require('./controllers/AccountsController')
+ mongoose = require( 'mongoose' );
 
 var indexRouter = require('./routes/index');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -15,6 +18,10 @@ var settingsRouter = require('./routes/settings');
 var squareRouter = require('./routes/square');
 
 var app = express();
+
+app.get('/accounts', accountsController.getAllAccounts );
+app.post('/saveAccount', accountsController.saveAccounts );
+app.post('/deleteAccount', accountsController.deleteAccounts );
 
 
 // view engine setup
