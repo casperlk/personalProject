@@ -4,8 +4,16 @@ const
  path = require('path');
  cookieParser = require('cookie-parser');
  logger = require('morgan');
- accountsController = require('./controllers/AccountsController')
+ accountsController = require('./controllers/accountsController'),
+ settingsController = require('./controllers/settingsController')
  mongoose = require( 'mongoose' );
+
+ mongoose.connect( 'mongodb://localhost/skillmastery' );
+ const db = mongoose.connection;
+ db.on('error', console.error.bind(console, 'connection error:'));
+ db.once('open', function() {
+  console.log("we are connected!")
+ });
 
 var indexRouter = require('./routes/index');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -19,9 +27,6 @@ var squareRouter = require('./routes/square');
 
 var app = express();
 
-app.get('/accounts', accountsController.getAllAccounts );
-app.post('/saveAccount', accountsController.saveAccounts );
-app.post('/deleteAccount', accountsController.deleteAccounts );
 
 
 // view engine setup
@@ -34,6 +39,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/accounts', accountsController.getAllAccounts );
+
+app.post('/saveAccount', accountsController.saveAccount );
+
+app.post('/deleteAccount', accountsController.deleteAccount );
+
+
 app.use('/', indexRouter);
 app.use('/leaderboard', leaderboardRouter);
 app.use('/cssdemo', cssdemoRouter);
@@ -41,7 +53,7 @@ app.use('/imagedemo', imagedemoRouter);
 app.use('/formdemo', formdemoRouter);
 app.use('/users', usersRouter);
 app.use('/play', playRouter);
-app.use('/settings', settingsRouter);
+//app.use('/settings', settingsController.showAccounts);
 app.use('/square', squareRouter);
 
 // catch 404 and forward to error handler

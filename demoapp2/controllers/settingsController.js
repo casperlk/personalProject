@@ -5,11 +5,10 @@ console.log("loading the account Controller")
 
 // this displays all of the accounts
 exports.getAllAccounts = ( req, res ) => {
-  console.log('in getAllAccounts-start')
+  console.log('in getAllAccounts')
   Account.find( {} )
     .exec()
     .then( ( accounts ) => {
-      console.log("in getAllAccounts-then")
       res.render( 'accounts', {
         accounts: accounts
       } );
@@ -28,11 +27,11 @@ exports.getAllAccounts = ( req, res ) => {
 
 exports.saveAccount = ( req, res ) => {
   console.log("in saveAccount!")
-  console.dir(req.body)
+  console.dir(req)
   let newAccount = new Account( {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    userName: req.body.wowOK
+    firstName: req.body.firstname,
+    lastName: req.body.lastname,
+    userName: req.body.username
   } )
 
   console.log("account = "+newAccount)
@@ -50,12 +49,12 @@ exports.deleteAccount = (req, res) => {
   console.log("in deleteAccount")
   let accountName = req.body.deleteName
   if (typeof(accountName)=='string') {
-      Account.deleteOne({_id:accountName})
+      Account.deleteOne({name:accountName})
            .exec()
            .then(()=>{res.redirect('/accounts')})
            .catch((error)=>{res.send(error)})
   } else if (typeof(accountName)=='object'){
-      Account.deleteMany({_id:{$in:accountName}})
+      Account.deleteMany({name:{$in:accountName}})
            .exec()
            .then(()=>{res.redirect('/accounts')})
            .catch((error)=>{res.send(error)})

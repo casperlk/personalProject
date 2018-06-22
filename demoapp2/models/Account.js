@@ -2,7 +2,7 @@
 const mongoose = require( 'mongoose' );
 
 var accountSchema = mongoose.Schema( {
-  username: String,
+  userName: String,
   firstName: String,
   lastName: String
 } );

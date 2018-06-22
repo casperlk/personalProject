@@ -2,13 +2,16 @@ extends layoutBS
 
 block content
   h1 Add a Account
-  form(method="post" action="saveAccount")
+  form(method="post" action="/saveAccount")
     .formGroup
-      label account name
-      input(type="text" name="name")
+      label account first name
+      input(type="text" name="firstName")
     .formGroup
-      label description
-      textarea(name="description" rows="10" cols="80")
+      label account last name
+      input(type="text" name="lastName")
+    .formGroup
+      label userName
+      textarea(name="wowOK" rows="10" cols="80")
     input(type="submit")
   hr
   h1 List of All Accounts
@@ -16,8 +19,7 @@ block content
     ol
       each account in accounts
         li
-          input(name="deleteName" value=account.name type="checkbox")
-          e #{account.name} --
-          i #{account.description}
+          input(name="deleteName" value=account._id type="checkbox")
+          e #{account.firstName} -- #{account.lastName} --#{account.userName} --
     input(type="submit" value="Delete checked items")
     hr
