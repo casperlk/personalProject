@@ -1,19 +1,20 @@
 const
- createError = require('http-errors');
- express = require('express');
- path = require('path');
- cookieParser = require('cookie-parser');
- logger = require('morgan');
- accountsController = require('./controllers/accountsController'),
- settingsController = require('./controllers/settingsController')
- mongoose = require( 'mongoose' );
+createError = require('http-errors');
+express = require('express');
+path = require('path');
+cookieParser = require('cookie-parser');
+logger = require('morgan');
+accountsController = require('./controllers/accountsController'),
+settingsController = require('./controllers/settingsController')
+usersController = require('./controllers/usersController'),
+mongoose = require( 'mongoose' );
 
- mongoose.connect( 'mongodb://localhost/skillmastery' );
- const db = mongoose.connection;
- db.on('error', console.error.bind(console, 'connection error:'));
- db.once('open', function() {
+mongoose.connect( 'mongodb://localhost/skillmastery' );
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
   console.log("we are connected!")
- });
+});
 
 var indexRouter = require('./routes/index');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -30,11 +31,11 @@ var app = express();
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
- // here we set up authentication with passport
- const session = require("express-session");
- const passport = require('passport')
- const configPassport = require('./config/passport')
- configPassport(passport)
+// here we set up authentication with passport
+const session = require("express-session");
+const passport = require('passport')
+const configPassport = require('./config/passport')
+configPassport(passport)
 
 
 
@@ -84,9 +85,9 @@ app.get('/login', function(req,res){
 
 // route for logging out
 app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
+  req.logout();
+  res.redirect('/');
+});
 
 
 // =====================================
@@ -99,31 +100,36 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 
 
 app.get('/login/authorized',
-        passport.authenticate('google', {
-                successRedirect : '/',
-                failureRedirect : '/loginerror'
-        }));
+passport.authenticate('google', {
+  successRedirect : '/',
+  failureRedirect : '/loginerror'
+}));
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-    console.log("checking to see if they are authenticated!")
-    // if user is authenticated in the session, carry on
-    res.locals.loggedIn = false
-    if (req.isAuthenticated()){
-      console.log("user has been Authenticated")
-      return next();
-    } else {
-      console.log("user has not been authenticated...")
-      res.redirect('/login');
-    }
+  console.log("checking to see if they are authenticated!")
+  // if user is authenticated in the session, carry on
+  res.locals.loggedIn = false
+  if (req.isAuthenticated()){
+    console.log("user has been Authenticated")
+    return next();
+  } else {
+    console.log("user has not been authenticated...")
+    res.redirect('/login');
+  }
 }
 
 // we require them to be logged in to see their profile
 app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile', {
-            user : req.user // get the user out of session and pass to template
-        });
-    });
+  res.render('profile', {
+    user : req.user // get the user out of session and pass to template
+  });
+});
+
+app.get('/users',usersController.getAllUsers)
+app.get('/users/:id',
+usersController.attachUser,
+usersController.getUser)
 
 
 // catch 404 and forward to error handler
