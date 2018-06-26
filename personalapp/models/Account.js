@@ -7,4 +7,4 @@ var accountSchema = mongoose.Schema( {
   lastName: String
 } );
 
-module.exports = mongoose.model( 'Account', accountSchema );
+module.exports = mongoose.model( 'account', accountSchema );

@@ -7,7 +7,7 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User       = require('../models/user');
+var user       = require('../models/user');
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -23,7 +23,7 @@ module.exports = function(passport) {
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
       console.log('in deserializeUser')
-        User.findById(id, function(err, user) {
+        user.findById(id, function(err, user) {
             done(err, user);
         });
     });
@@ -50,7 +50,7 @@ module.exports = function(passport) {
         process.nextTick(function() {
            console.log("looking for userid")
             // try to find the user based on their google id
-            User.findOne({ 'googleid' : profile.id }, function(err, user) {
+            user.findOne({ 'googleid' : profile.id }, function(err, user) {
                 if (err)
                     return done(err);
 
@@ -63,12 +63,12 @@ module.exports = function(passport) {
                     console.dir(profile)
                     // if the user isnt in our database, create a new user
                     var newUser
-                     = new User(
+                     = new user(
                          {googleid: profile.id,
                           googletoken: token,
                           googlename:profile.displayName,
                           googleemail:profile.emails[0].value,
-                        }); 
+                        });
 
                     // set all of the relevant information
                     /*

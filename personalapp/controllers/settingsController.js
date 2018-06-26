@@ -1,12 +1,12 @@
 'use strict';
-const Account = require( '../models/account' );
+const account = require( '../models/account' );
 console.log("loading the settings Controller")
 
 
 // this displays all of the accounts
 exports.getAllAccounts = ( req, res ) => {
   console.log('in getAllAccounts')
-  Account.find( {} )
+  account.find( {} )
     .exec()
     .then( ( accounts ) => {
       res.render( 'accounts', {
@@ -28,7 +28,7 @@ exports.getAllAccounts = ( req, res ) => {
 exports.saveAccount = ( req, res ) => {
   console.log("in saveAccount!")
   console.dir(req)
-  let newAccount = new Account( {
+  let newAccount = new account( {
     firstName: req.body.firstname,
     lastName: req.body.lastname,
     userName: req.body.username
@@ -49,12 +49,12 @@ exports.deleteAccount = (req, res) => {
   console.log("in deleteAccount")
   let accountName = req.body.deleteName
   if (typeof(accountName)=='string') {
-      Account.deleteOne({name:accountName})
+      account.deleteOne({name:accountName})
            .exec()
            .then(()=>{res.redirect('/accounts')})
            .catch((error)=>{res.send(error)})
   } else if (typeof(accountName)=='object'){
-      Account.deleteMany({name:{$in:accountName}})
+      account.deleteMany({name:{$in:accountName}})
            .exec()
            .then(()=>{res.redirect('/accounts')})
            .catch((error)=>{res.send(error)})
