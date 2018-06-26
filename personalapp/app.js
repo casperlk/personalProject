@@ -65,7 +65,7 @@ app.use('/imagedemo', imagedemoRouter);
 app.use('/formdemo', formdemoRouter);
 app.use('/users', usersRouter);
 app.use('/play', playRouter);
-app.use('/settings', settingsController);
+// app.use('/settings', settingsController);
 // app.use('/settings', settingsController.showAccounts);
 app.use('/square', squareRouter);
 //Authentication roots
