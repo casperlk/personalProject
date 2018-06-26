@@ -8,7 +8,6 @@ accountsController = require('./controllers/accountsController'),
 settingsController = require('./controllers/settingsController')
 usersController = require('./controllers/usersController'),
 mongoose = require( 'mongoose' );
-
 mongoose.connect( 'mongodb://localhost/skillmastery' );
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -66,7 +65,8 @@ app.use('/imagedemo', imagedemoRouter);
 app.use('/formdemo', formdemoRouter);
 app.use('/users', usersRouter);
 app.use('/play', playRouter);
-//app.use('/settings', settingsController.showAccounts);
+app.use('/settings', settingsController);
+// app.use('/settings', settingsController.showAccounts);
 app.use('/square', squareRouter);
 //Authentication roots
 
@@ -101,7 +101,7 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 
 app.get('/login/authorized',
 passport.authenticate('google', {
-  successRedirect : '/',
+  successRedirect : '/leaderboard',
   failureRedirect : '/loginerror'
 }));
 

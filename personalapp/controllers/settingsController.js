@@ -1,6 +1,6 @@
 'use strict';
 const Account = require( '../models/account' );
-console.log("loading the account Controller")
+console.log("loading the settings Controller")
 
 
 // this displays all of the accounts
